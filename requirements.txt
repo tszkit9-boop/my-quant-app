@@ -3,3 +3,8 @@ yfinance
 pandas
 numpy
 matplotlib
+futu-api
+tigeropen
+longport
+ib-async
+alpaca-py
