@@ -1,0 +1,37 @@
+# .github/workflows/deploy.yml
+
+name: CI/CD Pipeline for Streamlit App
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Run smoke test (verify app starts)
+      uses: streamlit/streamlit-app-action@v0.0.3
+      with:
+        app-path: app.py
+    
+    - name: Notify completion
+      run: |
+        echo "✅ All checks passed! Your app is ready."
+        echo "📦 Streamlit Cloud will auto-deploy from main branch."
